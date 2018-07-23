@@ -1,5 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronCircleDown } from '@fortawesome/free-solid-svg-icons'
+
 
 class DrawerContainer extends React.Component {
   constructor(props){
@@ -8,7 +12,6 @@ class DrawerContainer extends React.Component {
       isClassHidden: true,
       style: {
         display: 'none',
-        transition: 'height 350ms ease-in-out',
         height: 0
       }
     };
@@ -38,7 +41,6 @@ class DrawerContainer extends React.Component {
       style: {
         display: 'none',
         height: 0,
-        transition: 'height 350ms ease-in-out'
       }
     });
   }
@@ -49,14 +51,17 @@ class DrawerContainer extends React.Component {
       style: {
         display: 'block',
         height: this.findHeight(),
-        transition: 'height 350ms ease-in-out'
       }
     });
   }
 
   render(){
     return(
-    <div>
+    <div style= {
+      {
+        textAlign: 'center'
+      }
+    }>
       <header
       style = {this.state.style}
       ref = {this.drawerRef}
@@ -65,8 +70,21 @@ class DrawerContainer extends React.Component {
         <SearchBar />
       </header>
 
-      <button onClick= {this.toggleDrawer}>
-        "Click Me"
+      <button
+      onClick= {this.toggleDrawer}
+      style = {
+        {
+          width: 25 + "%",
+          backgroundColor: 'rgba(0,0,0,0)',
+          color: '#fff',
+          borderRadius: '0 0 50% 50%',
+          borderTop: 'none',
+          borderColor: '#fff',
+          padding: '10px 0'
+        }
+      }
+      >
+        <FontAwesomeIcon icon={faChevronCircleDown} size='6x'/>
       </button>
     </div>
     );
@@ -106,14 +124,23 @@ class SearchBar extends React.Component {
         padding: "10px 5px",
         zIndex: 2,
         fontSize: 3 + 'em'
-      }
+      },
+      value: ''
     }
+    this.handleChange = this.handleChange.bind(this)
   }
+
+  handleChange(event) {
+    this.setState({value: event.target.value})
+  }
+
   render() {
     return (
       <input
+      onChange = {this.handleChange}
       placeholder = {this.state.placeholder}
       style = {this.state.style}
+      value = {this.state.value}
       />
     );
   }
